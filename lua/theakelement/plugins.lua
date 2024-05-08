@@ -52,5 +52,12 @@ require("lazy").setup({
         dependencies = { "nvim-lua/plenary.nvim" }
     },
     { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-    'mbbill/undotree'
+    'mbbill/undotree',
+    {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        config = true
+        -- use opts = {} for passing setup options
+        -- this is equalent to setup({}) function
+    }
 })
