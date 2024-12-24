@@ -1,3 +1,5 @@
+vim.opt.guicursor = "n-c-o:block,i-r-v-ve:hor20"
+
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
