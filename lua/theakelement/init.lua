@@ -1,3 +1,2 @@
-require("theakelement.remap")
+require("theakelement.remaps")
 require("theakelement.set")
-require("theakelement.plugins")
