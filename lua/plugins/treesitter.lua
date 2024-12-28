@@ -15,6 +15,8 @@ return {
                     'dockerfile',
                     'yaml',
                     'terraform',
+                    'markdown',
+                    'markdown_inline',
                 },
                 sync_install = false,
                 highlight = { enable = true },

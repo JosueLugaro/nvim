@@ -126,7 +126,8 @@ return {
             'dockerls',
             'docker_compose_language_service',
             'yamlls',
-            'terraformls'
+            'terraformls',
+            'marksman',
         },
         handlers = {
           lsp_zero.default_setup,
