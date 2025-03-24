@@ -14,6 +14,11 @@ vim.opt.signcolumn = 'yes'
 
 vim.g.netrw_liststyle = 3
 
+-- Reassign buffer-local mapping for ft_sql
+-- so that I can use <C-c> in SQL files to return
+-- to normal mode
+vim.g.ftplugin_sql_omni_key = '<C-j>'
+
 -- Global user group to register other custom autocmds
 vim.api.nvim_create_augroup('UserGroup', {})
 
