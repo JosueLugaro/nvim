@@ -118,16 +118,16 @@ return {
 
       require('mason-lspconfig').setup({
         ensure_installed = {
-            'lua_ls',
-            'pyright',
-            'gopls',
-            'jdtls',
             'bashls',
             'dockerls',
             'docker_compose_language_service',
-            'yamlls',
-            'terraformls',
+            'gopls',
+            'jdtls',
+            'lua_ls',
             'marksman',
+            'pyright',
+            'terraformls',
+            'yamlls',
         },
         handlers = {
           lsp_zero.default_setup,
