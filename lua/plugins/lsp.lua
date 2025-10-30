@@ -21,6 +21,7 @@ return {
     event = 'InsertEnter',
     dependencies = {
       {'L3MON4D3/LuaSnip'},
+      { 'saadparwaiz1/cmp_luasnip' },
     },
     config = function()
       -- Here you configure the nvim-cmp setup
@@ -29,6 +30,29 @@ return {
 
       local cmp = require('cmp')
       local cmp_action = lsp_zero.cmp_action()
+      -- Guarded require for luasnip should be placed near the top of the config() function:
+      local ok_ls, luasnip = pcall(require, "luasnip")
+      if not ok_ls then
+        luasnip = {
+          expand_or_jumpable = function() return false end,
+          expand_or_jump = function() end,
+          jumpable = function() return false end,
+          jump = function() end,
+        }
+        vim.schedule(function()
+          vim.notify("LuaSnip not loaded; cmp Tab mappings will fallback.", vim.log.levels.WARN)
+        end)
+      end
+      
+      -- A safe helper to try accepting copilot inline suggestion:
+      local function try_accept_copilot()
+        local ok, sugg = pcall(require, "copilot.suggestion")
+        if ok and sugg and sugg.is_visible() then
+          sugg.accept()
+          return true
+        end
+        return false
+      end
 
       cmp.setup({
         formatting = lsp_zero.cmp_format(),
@@ -46,6 +70,38 @@ return {
           -- Not gonna lie, idk what this is
           ['<C-f>'] = cmp_action.luasnip_jump_forward(),
           ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+          
+          -- Now the Tab mappings (insert these within your mapping = cmp.mapping.preset.insert({ ... }) table):
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              local entry = cmp.get_selected_entry()
+              if entry and entry.source and entry.source.name == "copilot" then
+                -- confirm the selected copilot completion
+                cmp.confirm({ select = true })
+              else
+                -- otherwise just move to next item
+                cmp.select_next_item()
+              end
+            elseif luasnip.expand_or_jumpable() then
+              luasnip.expand_or_jump()
+            else
+              -- If cmp isn't visible, try to accept the inline copilot suggestion
+              if try_accept_copilot() then
+                return
+              end
+              fallback()
+            end
+          end, { "i", "s" }),
+          
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
         })
       })
     end
