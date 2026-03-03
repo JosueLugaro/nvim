@@ -3,6 +3,8 @@ vim.opt.guicursor = "n-c-o:block,i-r-v-ve:hor20"
 vim.opt.nu = true
 vim.opt.relativenumber = true
 
+vim.opt.scrolloff = 4
+
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -37,3 +39,9 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     end
   end,
 })
+
+-- Enable folding based on treesitter
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldnestmax = 1
+vim.opt.foldlevel = 99

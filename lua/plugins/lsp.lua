@@ -178,11 +178,11 @@ return {
             'dockerls',
             'docker_compose_language_service',
             'gopls',
-            'jdtls',
             'lua_ls',
             'marksman',
             'pyright',
             'terraformls',
+            'ts_ls',
             'yamlls',
         },
         handlers = {
