@@ -38,8 +38,8 @@ return {
         -- Permissive should_attach: attach to normal listed buffers with a filetype.
         -- Adjust to be more strict if you want to exclude specific filetypes.
         should_attach = function(bufnr)
-          local buftype = vim.api.nvim_buf_get_option(bufnr, "buftype")
-          local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
+          local buftype = vim.bo[bufnr].buftype
+          local ft = vim.bo[bufnr].filetype
           if buftype ~= "" and buftype ~= " " then return false end   -- skip terminal, prompt, etc.
           if not ft or ft == "" then return false end                 -- skip buffers with no filetype
           return true

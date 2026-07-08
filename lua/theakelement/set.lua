@@ -42,6 +42,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 -- Enable folding based on treesitter
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldnestmax = 1
 vim.opt.foldlevel = 99
